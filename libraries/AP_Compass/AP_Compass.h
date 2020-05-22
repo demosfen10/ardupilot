@@ -63,6 +63,8 @@
 
 #define MAX_CONNECTED_MAGS (COMPASS_MAX_UNREG_DEV+COMPASS_MAX_INSTANCES)
 
+#define MY_NEW_PARAM_DEFAULT         100
+
 class CompassLearn;
 
 class Compass
@@ -74,6 +76,8 @@ public:
     /* Do not allow copies */
     Compass(const Compass &other) = delete;
     Compass &operator=(const Compass&) = delete;
+		
+	static const struct AP_Param::GroupInfo var_info[];
 
     // get singleton instance
     static Compass *get_singleton() {
@@ -343,6 +347,9 @@ public:
      */
     MAV_RESULT mag_cal_fixed_yaw(float yaw_deg, uint8_t compass_mask,
                                  float lat_deg, float lon_deg);
+
+	protected:
+		AP_Int16 _my_new_lib_parameter;              /// description of my new parameter
 
 private:
     static Compass *_singleton;
