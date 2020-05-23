@@ -300,8 +300,6 @@ public:
     uint32_t last_update_ms(void) const { return last_update_ms(0); }
     uint32_t last_update_ms(uint8_t i) const { return _get_state(Priority(i)).last_update_ms; }
 
-    static const struct AP_Param::GroupInfo var_info[];
-
     // HIL variables
     struct {
         Vector3f Bearth;

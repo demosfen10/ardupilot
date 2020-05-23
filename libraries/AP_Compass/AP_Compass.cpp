@@ -645,6 +645,7 @@ const AP_Param::GroupInfo Compass::var_info[] = {
     // @User: Advanced
     AP_GROUPINFO("CUS_YAW", 51, Compass, _custom_yaw, 0),
 #endif
+
     AP_GROUPEND
 };
 
