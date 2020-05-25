@@ -646,6 +646,13 @@ const AP_Param::GroupInfo Compass::var_info[] = {
     AP_GROUPINFO("CUS_YAW", 51, Compass, _custom_yaw, 0),
 #endif
 
+    // @Param: MY_NEW_P
+    // @DisplayName: My New Library Parameter
+    // @Description: The new library parameter description goes here
+    // @Range: -32768 32767
+    // @User: Advanced
+    AP_GROUPINFO("MY_NEW_P", 9, Compass, _my_new_lib_parameter, MY_NEW_PARAM_DEFAULT),
+
     AP_GROUPEND
 };
 
