@@ -37,7 +37,13 @@ public:
         BattMonitor_LowVoltageSource_SagCompensated = 1
     };
 
-    BattPercent_remaining_switch=1;
+    // switch type of battery percent old/new
+    enum BattMonitor_SwitchTypeBattPercent {
+        BattMonitor_SwitchTypeBattPercent_Old = 0,
+        BattMonitor_SwitchTypeBattPercent_New = 1
+    };
+
+    /// BattPercent_remaining_switch=1;
 
     BattMonitor_Type type(void) const { return (enum BattMonitor_Type)_type.get(); }
     BattMonitor_LowVoltage_Source failsafe_voltage_source(void) { return (enum BattMonitor_LowVoltage_Source)_failsafe_voltage_source.get(); }
