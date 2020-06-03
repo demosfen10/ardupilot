@@ -119,6 +119,8 @@ private:
     void _update_rangefinder(float range_value);
     void _set_signal_handlers(void) const;
 
+    void battery_update();
+
     struct gps_data {
         double latitude;
         double longitude;
@@ -227,6 +229,8 @@ private:
     uint32_t time_delta_wind;
     uint32_t delayed_time_wind;
     uint32_t wind_start_delay_micros;
+
+    uint32_t start_batt_update_time;
 
     // internal SITL model
     SITL::Aircraft *sitl_model;
