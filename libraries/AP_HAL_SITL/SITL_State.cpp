@@ -111,6 +111,8 @@ void SITL_State::_sitl_setup(const char *home_str)
         // start with non-zero clock
         hal.scheduler->stop_clock(1);
     }
+
+    start_batt_update_time = 0;
 }
 
 
@@ -620,6 +622,9 @@ void SITL_State::_fdm_input_local(void)
     }
 
     set_height_agl();
+    if (is_equal<float>(_sitl->state.battery_voltage, -1.f)) {
+        battery_update();
+    }
 
     _synthetic_clock_mode = true;
     _update_count++;
@@ -848,6 +853,25 @@ void SITL_State::set_height_agl(void)
     if (_sitl != nullptr) {
         // fall back to flat earth model
         _sitl->height_agl = _sitl->state.altitude - home_alt;
+    }
+}
+
+void SITL_State::battery_update()
+{
+    if (start_batt_update_time == 0) {
+        start_batt_update_time = AP_HAL::millis();
+    }
+
+    uint32_t uncharge_time = 10 * 60 * 1000; // 10 min until empty battery
+    float battery_max = 60.f;
+    float battery_min = 35.f;
+    uint32_t time_since_check_battery = AP_HAL::millis() - start_batt_update_time;
+    float uncharge_speed = (battery_max - battery_min) / uncharge_time;
+
+    if (time_since_check_battery > uncharge_time) {
+        _sitl->state.battery_voltage = 0.f;
+    } else {
+        _sitl->state.battery_voltage = battery_max - time_since_check_battery * uncharge_speed;
     }
 }
 
