@@ -28,6 +28,7 @@ public:
         BattMonitor_TYPE_SUI3                       = 13,
         BattMonitor_TYPE_SUI6                       = 14,
         BattMonitor_TYPE_NeoDesign                  = 15,
+        BattMonitor_TYPE_SwitchTypeBattPercent = 16,    
     };
 
     // low voltage sources (used for BATT_LOW_TYPE parameter)
@@ -35,6 +36,8 @@ public:
         BattMonitor_LowVoltageSource_Raw            = 0,
         BattMonitor_LowVoltageSource_SagCompensated = 1
     };
+
+    BattPercent_remaining_switch=1;
 
     BattMonitor_Type type(void) const { return (enum BattMonitor_Type)_type.get(); }
     BattMonitor_LowVoltage_Source failsafe_voltage_source(void) { return (enum BattMonitor_LowVoltage_Source)_failsafe_voltage_source.get(); }
@@ -59,4 +62,5 @@ public:
     AP_Int32 _arming_minimum_capacity;  /// capacity level required to arm
     AP_Float _arming_minimum_voltage;   /// voltage level required to arm
     AP_Int8  _i2c_bus;                  /// I2C bus number
+    AP_Int8 _switchTypeBattPercent;     /// switch old/new charge % output
 };

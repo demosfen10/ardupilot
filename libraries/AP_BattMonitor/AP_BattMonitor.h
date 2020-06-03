@@ -185,6 +185,7 @@ private:
     AP_BattMonitor_Backend *drivers[AP_BATT_MONITOR_MAX_INSTANCES];
     uint32_t    _log_battery_bit;
     uint8_t     _num_instances;                                     /// number of monitors
+    uint8_t     _switchTypeBattPercent;                            /// switch old/new charge % output
 
     void convert_params(void);
 

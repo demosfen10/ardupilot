@@ -63,6 +63,10 @@ const AP_Param::GroupInfo AP_BattMonitor::var_info[] = {
     // @Path: AP_BattMonitor_Params.cpp
     AP_SUBGROUPINFO(_params[8], "9_", 31, AP_BattMonitor, AP_BattMonitor_Params),
 
+    // @Group: 10_
+    // @Path: AP_BattMonitor_Params.cpp
+    AP_SUBGROUPINFO(_params[9], "10_", 32, AP_BattMonitor, AP_BattMonitor_Params),
+
     AP_GROUPEND
 };
 

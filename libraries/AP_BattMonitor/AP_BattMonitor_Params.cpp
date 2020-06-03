@@ -169,6 +169,14 @@ const AP_Param::GroupInfo AP_BattMonitor_Params::var_info[] = {
     // @User: Standard
     AP_GROUPINFO("BUS", 20, AP_BattMonitor_Params, _i2c_bus, 0),
 
+    //@Param: switchTypeBattPercent
+    // @DisplayName: Switch type battery percent
+    // @Description: Switch old/new charge % output
+    // @Range: 1 2
+    // @User: Standard
+    AP_GROUPINFO("switchTypeBattPercent", 21, AP_BattMonitor_Params, _switchTypeBattPercent, 0),
+
+
     AP_GROUPEND
 
 };
