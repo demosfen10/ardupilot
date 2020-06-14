@@ -30,56 +30,80 @@ AP_BattMonitor_Backend::AP_BattMonitor_Backend(AP_BattMonitor &mon, AP_BattMonit
 {
 }
 
+
+
 /// capacity_remaining_pct - returns the % battery capacity remaining (0 ~ 100)
 uint8_t AP_BattMonitor_Backend::capacity_remaining_pct() const
 {
-    switch(_params._switchTypeBattPercent){
+    
+    switch((AP_BattMonitor_Params::BattMonitor_SwitchTypeBattPercent)_params._switchTypeBattPercent.get())
+    {
         case AP_BattMonitor_Params::BattMonitor_SwitchTypeBattPercent_Old: 
+        {
             float mah_remaining = _params._pack_capacity - _state.consumed_mah;
             if ( _params._pack_capacity > 10 ) { // a very very small battery
                 return MIN(MAX((100 * (mah_remaining) / _params._pack_capacity), 0), UINT8_MAX);
-            } else {
+            } else 
+            {
                 return 0;
             }
-       case AP_BattMonitor_Params::BattMonitor_SwitchTypeBattPercent_New:
+            break;
+        }
+       case AP_BattMonitor_Params::BattMonitor_SwitchTypeBattPercent_New: 
+       {
             float  volt=_state.voltage;
             float raznica=0;
-            if(volt>54){ return 100;}//100
-            else if(volt=54){ return 95;} //100-95
-            else if(54>volt) && (volt>=53){//95-90
-                raznica=volt-53;
-                return 90 +raznica/0.2; }
-            else if(53>volt) && (volt>=49){//90-50
-                raznica=volt-49;
-                return 50 +raznica/0.025; }
-            else if(49>volt) && (volt>=48){//50-40
-                raznica=volt-48;
-                return 40 +raznica/0.1; }
-            else if(48>volt) && (volt>=47){//40-30
-                raznica=volt-47;
-                return 30 +raznica/0.1; }
-            else if(47>volt) && (volt>=46){//30-20
-                raznica=volt-46;
-                return 20 +raznica/0.1; } 
-            else if(46>volt) && (volt>=45){//20-15
-                raznica=volt-45;
-                return 15 +raznica/0.2; }  
-            else if(45>volt) && (volt>=44){//15-10
-                raznica=volt-44;
-                return 10 +raznica/0.1; }
-            else if(44>volt) && (volt>=43){//10-5
-                raznica=volt-43;
-                return 5 +raznica/0.2; }     
-            else if(43>volt) && (volt>=42){//5-2
-                raznica=volt-42;
-                return 2 +raznica*2; }
-            else if(42>volt) && (volt>=41){//2-1
-                raznica=volt-41;
-                return 1 +raznica; }  
-            else if(41<volt) {//0
-                return 0; }
+            float v54=54.0;
+            //bool foo () {if (volt > -0.9999   ) return true;}
+            if (volt > 54) {  return 100; }//100
+            else if (is_equal(volt, v54)) { return 95; } //95
+            else  if (54>volt  && volt >= 53) {//95-90
+                raznica = volt - 53;
+                return 90 + raznica / 0.2 ;
+            }
+            else  if (53>volt  && volt >= 49) {//90-50
+                raznica = volt - 49;
+                return 50 + raznica / 0.1;
+            }
+            else  if (49 > volt && volt >= 48) {//50-40
+                raznica = volt - 48;
+                return 40 + raznica / 0.1 ;
+            }
+            else  if (48 > volt && volt >= 47) {//40-30
+                raznica = volt - 47;
+                return 30 + raznica / 0.1 ;
+            }
+            else  if (47 > volt && volt >= 46) {//30-20
+                raznica = volt - 46;
+                return 20 + raznica / 0.1 ;
+            }
+            else   if (46 > volt && volt >= 45) {//20-15
+                raznica = volt - 45;
+                return 15 + raznica / 0.2 ;
+            }
+            else  if (45 > volt && volt >= 44) {//15-10
+                raznica = volt - 44;
+                return 10 + raznica / 0.1 ;
+            }
+            else  if (44 > volt && volt >= 43) {//10-5
+                raznica = volt - 43;
+                return 5 + raznica / 0.2 ;
+            }
+            else  if (43 > volt && volt >= 42) {//5-2
+                raznica = volt - 42;
+                return 2 + raznica * 2;
+            }
+            else  if (42 > volt && volt >= 41) {//2-1
+                raznica = volt - 41;
+                return 1 + raznica ;
+            }
+            else {//0
+                return 0;
+            }  
+            break;
+        }
+        default: return 0;
     }
-
 }
 
 // update battery resistance estimate
