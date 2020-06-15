@@ -33,11 +33,24 @@ AP_BattMonitor_Backend::AP_BattMonitor_Backend(AP_BattMonitor &mon, AP_BattMonit
 /// capacity_remaining_pct - returns the % battery capacity remaining (0 ~ 100)
 uint8_t AP_BattMonitor_Backend::capacity_remaining_pct() const
 {
-    float mah_remaining = _params._pack_capacity - _state.consumed_mah;
-    if ( _params._pack_capacity > 10 ) { // a very very small battery
-        return MIN(MAX((100 * (mah_remaining) / _params._pack_capacity), 0), UINT8_MAX);
-    } else {
-        return 0;
+     switch((AP_BattMonitor_Params::BattMonitor_SwitchTypeBattPercent)_params._switchTypeBattPercent.get())
+    {
+        case AP_BattMonitor_Params::BattMonitor_SwitchTypeBattPercent_Old: 
+        {
+            float mah_remaining = _params._pack_capacity - _state.consumed_mah;
+            if ( _params._pack_capacity > 10 ) { // a very very small battery
+                return MIN(MAX((100 * (mah_remaining) / _params._pack_capacity), 0), UINT8_MAX);
+            } else {
+                return 0;
+            }
+            break;
+        }
+        case AP_BattMonitor_Params::BattMonitor_SwitchTypeBattPercent_New: 
+       {
+          return voltage_input();
+       break;
+       }
+       default:return 0;
     }
 }
 
@@ -244,4 +257,57 @@ bool AP_BattMonitor_Backend::reset_remaining(float percentage)
     _state.failsafe = update_failsafes();
 
     return true;
+}
+
+float AP_BattMonitor_Backend::voltage_input() const
+{
+            float dv=0;
+            float volt=_state.voltage;
+            float v54=54.0;
+            if (volt > 54) {  return 100; }//100
+            else if (is_equal(volt, v54)) { return 95; } //95
+            else  if (54>volt  && volt >= 53) {//95-90
+                dv = volt - 53;
+                return 90 + dv / 0.2 ;
+            }
+            else  if (53>volt  && volt >= 49) {//90-50
+                dv = volt - 49;
+                return 50 + dv / 0.1;
+            }
+            else  if (49 > volt && volt >= 48) {//50-40
+                dv = volt - 48;
+                return 40 + dv / 0.1 ;
+            }
+            else  if (48 > volt && volt >= 47) {//40-30
+                dv = volt - 47;
+                return 30 + dv / 0.1 ;
+            }
+            else  if (47 > volt && volt >= 46) {//30-20
+                dv = volt - 46;
+                return 20 + dv / 0.1 ;
+            }
+            else   if (46 > volt && volt >= 45) {//20-15
+                dv = volt - 45;
+                return 15 + dv / 0.2 ;
+            }
+            else  if (45 > volt && volt >= 44) {//15-10
+                dv = volt - 44;
+                return 10 + dv / 0.1 ;
+            }
+            else  if (44 > volt && volt >= 43) {//10-5
+                dv = volt - 43;
+                return 5 + dv / 0.2 ;
+            }
+            else  if (43 > volt && volt >= 42) {//5-2
+                dv = volt - 42;
+                return 2 + dv * 2;
+            }
+            else  if (42 > volt && volt >= 41) {//2-1
+                dv = volt - 41;
+                return 1 + dv ;
+            }
+            else {//0
+                return 0;
+            }  
+            
 }
