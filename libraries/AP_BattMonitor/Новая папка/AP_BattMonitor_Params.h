@@ -19,7 +19,7 @@ public:
         BattMonitor_TYPE_ANALOG_VOLTAGE_AND_CURRENT = 4,
         BattMonitor_TYPE_SOLO                       = 5,
         BattMonitor_TYPE_BEBOP                      = 6,
-        BattMonitor_TYPE_SMBus_Generic              = 7,
+        BattMonitor_TYPE_MAXELL                     = 7,
         BattMonitor_TYPE_UAVCAN_BatteryInfo         = 8,
         BattMonitor_TYPE_BLHeliESC                  = 9,
         BattMonitor_TYPE_Sum                        = 10,
@@ -27,8 +27,7 @@ public:
         BattMonitor_TYPE_FuelLevel_PWM              = 12,
         BattMonitor_TYPE_SUI3                       = 13,
         BattMonitor_TYPE_SUI6                       = 14,
-        BattMonitor_TYPE_NeoDesign                  = 15,
-        BattMonitor_TYPE_MAXELL                     = 16,
+        BattMonitor_TYPE_NeoDesign                  = 15,    
     };
 
     // low voltage sources (used for BATT_LOW_TYPE parameter)
@@ -36,6 +35,14 @@ public:
         BattMonitor_LowVoltageSource_Raw            = 0,
         BattMonitor_LowVoltageSource_SagCompensated = 1
     };
+
+    // switch type of battery percent old/new
+    enum BattMonitor_SwitchTypeBattPercent {
+        BattMonitor_SwitchTypeBattPercent_Old = 0,
+        BattMonitor_SwitchTypeBattPercent_New = 1
+    };
+
+    /// BattPercent_remaining_switch=1;
 
     BattMonitor_Type type(void) const { return (enum BattMonitor_Type)_type.get(); }
     BattMonitor_LowVoltage_Source failsafe_voltage_source(void) { return (enum BattMonitor_LowVoltage_Source)_failsafe_voltage_source.get(); }
@@ -60,4 +67,5 @@ public:
     AP_Int32 _arming_minimum_capacity;  /// capacity level required to arm
     AP_Float _arming_minimum_voltage;   /// voltage level required to arm
     AP_Int8  _i2c_bus;                  /// I2C bus number
+    AP_Int8 _switchTypeBattPercent;     /// switch old/new charge % output
 };

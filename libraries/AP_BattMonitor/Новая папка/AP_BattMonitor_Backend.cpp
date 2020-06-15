@@ -3,10 +3,12 @@
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
+
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
+
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -28,14 +30,79 @@ AP_BattMonitor_Backend::AP_BattMonitor_Backend(AP_BattMonitor &mon, AP_BattMonit
 {
 }
 
+
+
 /// capacity_remaining_pct - returns the % battery capacity remaining (0 ~ 100)
 uint8_t AP_BattMonitor_Backend::capacity_remaining_pct() const
 {
-    float mah_remaining = _params._pack_capacity - _state.consumed_mah;
-    if ( _params._pack_capacity > 10 ) { // a very very small battery
-        return MIN(MAX((100 * (mah_remaining) / _params._pack_capacity), 0), UINT8_MAX);
-    } else {
-        return 0;
+    
+    switch((AP_BattMonitor_Params::BattMonitor_SwitchTypeBattPercent)_params._switchTypeBattPercent.get())
+    {
+        case AP_BattMonitor_Params::BattMonitor_SwitchTypeBattPercent_Old: 
+        {
+            float mah_remaining = _params._pack_capacity - _state.consumed_mah;
+            if ( _params._pack_capacity > 10 ) { // a very very small battery
+                return MIN(MAX((100 * (mah_remaining) / _params._pack_capacity), 0), UINT8_MAX);
+            } else 
+            {
+                return 0;
+            }
+            break;
+        }
+       case AP_BattMonitor_Params::BattMonitor_SwitchTypeBattPercent_New: 
+       {
+            float  volt=_state.voltage;
+            float raznica=0;
+            float v54=54.0;
+            //bool foo () {if (volt > -0.9999   ) return true;}
+            if (volt > 54) {  return 100; }//100
+            else if (is_equal(volt, v54)) { return 95; } //95
+            else  if (54>volt  && volt >= 53) {//95-90
+                raznica = volt - 53;
+                return 90 + raznica / 0.2 ;
+            }
+            else  if (53>volt  && volt >= 49) {//90-50
+                raznica = volt - 49;
+                return 50 + raznica / 0.1;
+            }
+            else  if (49 > volt && volt >= 48) {//50-40
+                raznica = volt - 48;
+                return 40 + raznica / 0.1 ;
+            }
+            else  if (48 > volt && volt >= 47) {//40-30
+                raznica = volt - 47;
+                return 30 + raznica / 0.1 ;
+            }
+            else  if (47 > volt && volt >= 46) {//30-20
+                raznica = volt - 46;
+                return 20 + raznica / 0.1 ;
+            }
+            else   if (46 > volt && volt >= 45) {//20-15
+                raznica = volt - 45;
+                return 15 + raznica / 0.2 ;
+            }
+            else  if (45 > volt && volt >= 44) {//15-10
+                raznica = volt - 44;
+                return 10 + raznica / 0.1 ;
+            }
+            else  if (44 > volt && volt >= 43) {//10-5
+                raznica = volt - 43;
+                return 5 + raznica / 0.2 ;
+            }
+            else  if (43 > volt && volt >= 42) {//5-2
+                raznica = volt - 42;
+                return 2 + raznica * 2;
+            }
+            else  if (42 > volt && volt >= 41) {//2-1
+                raznica = volt - 41;
+                return 1 + raznica ;
+            }
+            else {//0
+                return 0;
+            }  
+            break;
+        }
+        default: return 0;
     }
 }
 
@@ -166,12 +233,12 @@ bool AP_BattMonitor_Backend::arming_checks(char * buffer, size_t buflen) const
                                 is_positive(_params._low_voltage) &&
                                 (_params._low_voltage < _params._critical_voltage);
 
-    bool result =      update_check(buflen, buffer, below_arming_voltage, "below minimum arming voltage");
-    result = result && update_check(buflen, buffer, below_arming_capacity, "below minimum arming capacity");
-    result = result && update_check(buflen, buffer, low_voltage,  "low voltage failsafe");
+    bool result = update_check(buflen, buffer, low_voltage,  "low voltage failsafe");
     result = result && update_check(buflen, buffer, low_capacity, "low capacity failsafe");
     result = result && update_check(buflen, buffer, critical_voltage, "critical voltage failsafe");
     result = result && update_check(buflen, buffer, critical_capacity, "critical capacity failsafe");
+    result = result && update_check(buflen, buffer, below_arming_voltage, "below minimum arming voltage");
+    result = result && update_check(buflen, buffer, below_arming_capacity, "below minimum arming capacity");
     result = result && update_check(buflen, buffer, fs_capacity_inversion, "capacity failsafe critical > low");
     result = result && update_check(buflen, buffer, fs_voltage_inversion, "voltage failsafe critical > low");
 
