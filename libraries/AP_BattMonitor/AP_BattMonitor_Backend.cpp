@@ -47,10 +47,11 @@ uint8_t AP_BattMonitor_Backend::capacity_remaining_pct() const
         }
         case AP_BattMonitor_Params::BattMonitor_SwitchTypeBattPercent_New: 
        {
-          return voltage_input();
-       break;
+            return cpacity_ramaining_by_voltage();
+            break;
        }
-       default:return 0;
+        default:
+            return 0;
     }
 }
 
@@ -259,7 +260,7 @@ bool AP_BattMonitor_Backend::reset_remaining(float percentage)
     return true;
 }
 
-float AP_BattMonitor_Backend::voltage_input() const
+float AP_BattMonitor_Backend::cpacity_ramaining_by_voltage() const
 {
             float dv=0;
             float volt=_state.voltage;

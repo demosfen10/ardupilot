@@ -65,7 +65,7 @@ public:
     // reset remaining percentage to given value
     virtual bool reset_remaining(float percentage);
 
-    float voltage_input() const;
+    float cpacity_ramaining_by_voltage() const;
 
 protected:
     AP_BattMonitor                      &_mon;      // reference to front-end
