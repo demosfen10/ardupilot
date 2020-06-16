@@ -4306,6 +4306,28 @@ void GCS_MAVLINK::send_set_position_target_global_int(uint8_t target_system, uin
             0,0);   // yaw, yaw_rate
 }
 
+void GCS_MAVLINK::send_highres_imu()
+{
+    mavlink_msg_highres_imu_send(
+        chan,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        101);
+} 
+
 bool GCS_MAVLINK::try_send_message(const enum ap_message id)
 {
     bool ret = true;
@@ -4573,6 +4595,11 @@ bool GCS_MAVLINK::try_send_message(const enum ap_message id)
     case MSG_AUTOPILOT_VERSION:
         CHECK_PAYLOAD_SIZE(AUTOPILOT_VERSION);
         send_autopilot_version();
+        break;
+
+    case MSG_HIGHRES_IMU :
+        CHECK_PAYLOAD_SIZE(HIGHRES_IMU);
+        send_highres_imu();
         break;
 
     case MSG_ESC_TELEMETRY: {
