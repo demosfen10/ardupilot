@@ -505,6 +505,8 @@ protected:
 
     void manual_override(RC_Channel *c, int16_t value_in, uint16_t offset, float scaler, const uint32_t tnow, bool reversed = false);
 
+    void send_test_message();
+
 private:
 
     void log_mavlink_stats();
