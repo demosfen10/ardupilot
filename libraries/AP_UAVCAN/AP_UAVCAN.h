@@ -158,6 +158,8 @@ private:
     ///// LED /////
     void led_out_send();
 
+    void circuit_status_send();
+
     // buzzer
     void buzzer_send();
 
@@ -206,6 +208,15 @@ private:
     } _led_conf;
 
     HAL_Semaphore _led_out_sem;
+
+    ///Circuit Status///*************************
+    struct {
+        uint16_t circuit_id;
+        float voltage;
+        float current;
+        } _circuit_conf;
+
+        HAL_Semaphore circuit_sem;
 
     // buzzer
     struct {

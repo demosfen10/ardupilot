@@ -42,6 +42,8 @@
 #include <ardupilot/equipment/trafficmonitor/TrafficReport.hpp>
 #include <uavcan/equipment/gnss/RTCMStream.hpp>
 
+#include <uavcan/equipment/power/CircuitStatus.hpp>
+
 #include <AP_Baro/AP_Baro_UAVCAN.h>
 #include <AP_RangeFinder/AP_RangeFinder_UAVCAN.h>
 #include <AP_GPS/AP_GPS_UAVCAN.h>
@@ -110,6 +112,7 @@ static uavcan::Publisher<uavcan::equipment::indication::LightsCommand>* rgb_led[
 static uavcan::Publisher<uavcan::equipment::indication::BeepCommand>* buzzer[MAX_NUMBER_OF_CAN_DRIVERS];
 static uavcan::Publisher<ardupilot::indication::SafetyState>* safety_state[MAX_NUMBER_OF_CAN_DRIVERS];
 static uavcan::Publisher<uavcan::equipment::gnss::RTCMStream>* rtcm_stream[MAX_NUMBER_OF_CAN_DRIVERS];
+static uavcan::Publisher<uavcan::equipment::power::CircuitStatus>* circuit_status[MAX_NUMBER_OF_CAN_DRIVERS];
 
 // subscribers
 
@@ -272,6 +275,10 @@ void AP_UAVCAN::init(uint8_t driver_index, bool enable_filters)
     rtcm_stream[driver_index] = new uavcan::Publisher<uavcan::equipment::gnss::RTCMStream>(*_node);
     rtcm_stream[driver_index]->setTxTimeout(uavcan::MonotonicDuration::fromMSec(20));
     rtcm_stream[driver_index]->setPriority(uavcan::TransferPriority::OneHigherThanLowest);
+
+    circuit_status[driver_index] = new uavcan::Publisher<uavcan::equipment::power::CircuitStatus>(*_node);
+    circuit_status[driver_index]->setTxTimeout(uavcan::MonotonicDuration::fromMSec(20));
+    circuit_status[driver_index]->setPriority(uavcan::TransferPriority::OneHigherThanLowest);
     
     safety_button_listener[driver_index] = new uavcan::Subscriber<ardupilot::indication::Button, ButtonCb>(*_node);
     if (safety_button_listener[driver_index]) {
@@ -365,6 +372,7 @@ void AP_UAVCAN::loop(void)
         buzzer_send();
         rtcm_stream_send();
         safety_state_send();
+        circuit_status_send();
         AP::uavcan_dna_server().verify_nodes(this);
     }
 }
@@ -547,6 +555,16 @@ bool AP_UAVCAN::led_write(uint8_t led_index, uint8_t red, uint8_t green, uint8_t
     }
 
     return true;
+}
+
+void AP_UAVCAN::circuit_status_send()
+{
+    uavcan::equipment::power::CircuitStatus msg;
+    WITH_SEMAPHORE(circuit_sem);
+    msg.voltage=_circuit_conf.voltage;
+    msg.current=_circuit_conf.current;
+
+    circuit_status[_driver_index]->broadcast(msg);
 }
 
 // buzzer send
