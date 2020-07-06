@@ -1,0 +1,164 @@
+[New Thread 36500.0x1d08]
+[New Thread 36500.0x92d0]
+[New Thread 36500.0x20c0]
+[New Thread 36500.0x6bf4]
+[New Thread 36500.0xab08]
+[New Thread 36500.0x7c44]
+[New Thread 36500.0x6e38]
+#0  0x00007ffd539ffaa1 in ntdll!DbgBreakPoint () from /cygdrive/c/WINDOWS/SYSTEM32/ntdll.dll
+No symbol table info available.
+#1  0x00007ffd53a2d49b in ntdll!DbgUiRemoteBreakin () from /cygdrive/c/WINDOWS/SYSTEM32/ntdll.dll
+No symbol table info available.
+#2  0x00007ffd52d77bd4 in KERNEL32!BaseThreadInitThunk () from /cygdrive/c/WINDOWS/System32/KERNEL32.DLL
+No symbol table info available.
+#3  0x00007ffd539cce51 in ntdll!RtlUserThreadStart () from /cygdrive/c/WINDOWS/SYSTEM32/ntdll.dll
+No symbol table info available.
+#4  0x0000000000000000 in ?? ()
+No symbol table info available.
+Backtrace stopped: previous frame inner to this frame (corrupt stack?)
+
+Thread 7 (Thread 36500.0x6e38):
+#0  0x00007ffd539ffaa1 in ntdll!DbgBreakPoint () from /cygdrive/c/WINDOWS/SYSTEM32/ntdll.dll
+No symbol table info available.
+#1  0x00007ffd53a2d49b in ntdll!DbgUiRemoteBreakin () from /cygdrive/c/WINDOWS/SYSTEM32/ntdll.dll
+No symbol table info available.
+#2  0x00007ffd52d77bd4 in KERNEL32!BaseThreadInitThunk () from /cygdrive/c/WINDOWS/System32/KERNEL32.DLL
+No symbol table info available.
+#3  0x00007ffd539cce51 in ntdll!RtlUserThreadStart () from /cygdrive/c/WINDOWS/SYSTEM32/ntdll.dll
+No symbol table info available.
+#4  0x0000000000000000 in ?? ()
+No symbol table info available.
+Backtrace stopped: previous frame inner to this frame (corrupt stack?)
+
+Thread 6 (Thread 36500.0x7c44):
+#0  0x00007ffd539fc134 in ntdll!ZwReadFile () from /cygdrive/c/WINDOWS/SYSTEM32/ntdll.dll
+No symbol table info available.
+#1  0x00007ffd50915187 in ReadFile () from /cygdrive/c/WINDOWS/System32/KERNELBASE.dll
+No symbol table info available.
+#2  0x0000000180105f59 in proc_waiter(void*) () from /usr/bin/cygwin1.dll
+No symbol table info available.
+#3  0x0000000180047363 in cygthread::callfunc(bool) () from /usr/bin/cygwin1.dll
+No symbol table info available.
+#4  0x0000000180047926 in cygthread::stub(void*) () from /usr/bin/cygwin1.dll
+No symbol table info available.
+#5  0x0000000180048353 in _cygtls::call2(unsigned int (*)(void*, void*), void*, void*) () from /usr/bin/cygwin1.dll
+No symbol table info available.
+#6  0x0000000180048404 in _cygtls::call(unsigned int (*)(void*, void*), void*) () from /usr/bin/cygwin1.dll
+No symbol table info available.
+#7  0x00007ffd52d77bd4 in KERNEL32!BaseThreadInitThunk () from /cygdrive/c/WINDOWS/System32/KERNEL32.DLL
+No symbol table info available.
+#8  0x00007ffd539cce51 in ntdll!RtlUserThreadStart () from /cygdrive/c/WINDOWS/SYSTEM32/ntdll.dll
+No symbol table info available.
+#9  0x0000000000000000 in ?? ()
+No symbol table info available.
+Backtrace stopped: previous frame inner to this frame (corrupt stack?)
+
+Thread 5 (Thread 36500.0xab08):
+#0  0x00007ffd539fc134 in ntdll!ZwReadFile () from /cygdrive/c/WINDOWS/SYSTEM32/ntdll.dll
+No symbol table info available.
+#1  0x00007ffd50915187 in ReadFile () from /cygdrive/c/WINDOWS/System32/KERNELBASE.dll
+No symbol table info available.
+#2  0x000000018013e441 in wait_sig(void*) () from /usr/bin/cygwin1.dll
+No symbol table info available.
+#3  0x0000000180047363 in cygthread::callfunc(bool) () from /usr/bin/cygwin1.dll
+No symbol table info available.
+#4  0x0000000180047926 in cygthread::stub(void*) () from /usr/bin/cygwin1.dll
+No symbol table info available.
+#5  0x0000000180048353 in _cygtls::call2(unsigned int (*)(void*, void*), void*, void*) () from /usr/bin/cygwin1.dll
+No symbol table info available.
+#6  0x0000000180048404 in _cygtls::call(unsigned int (*)(void*, void*), void*) () from /usr/bin/cygwin1.dll
+No symbol table info available.
+#7  0x00007ffd52d77bd4 in KERNEL32!BaseThreadInitThunk () from /cygdrive/c/WINDOWS/System32/KERNEL32.DLL
+No symbol table info available.
+#8  0x00007ffd539cce51 in ntdll!RtlUserThreadStart () from /cygdrive/c/WINDOWS/SYSTEM32/ntdll.dll
+No symbol table info available.
+#9  0x0000000000000000 in ?? ()
+No symbol table info available.
+Backtrace stopped: previous frame inner to this frame (corrupt stack?)
+
+Thread 4 (Thread 36500.0x6bf4):
+#0  0x00007ffd539ffa04 in ntdll!ZwWaitForWorkViaWorkerFactory () from /cygdrive/c/WINDOWS/SYSTEM32/ntdll.dll
+No symbol table info available.
+#1  0x00007ffd53993fe0 in ntdll!RtlInitializeResource () from /cygdrive/c/WINDOWS/SYSTEM32/ntdll.dll
+No symbol table info available.
+#2  0x00007ffd52d77bd4 in KERNEL32!BaseThreadInitThunk () from /cygdrive/c/WINDOWS/System32/KERNEL32.DLL
+No symbol table info available.
+#3  0x00007ffd539cce51 in ntdll!RtlUserThreadStart () from /cygdrive/c/WINDOWS/SYSTEM32/ntdll.dll
+No symbol table info available.
+#4  0x0000000000000000 in ?? ()
+No symbol table info available.
+Backtrace stopped: previous frame inner to this frame (corrupt stack?)
+
+Thread 3 (Thread 36500.0x20c0):
+#0  0x00007ffd539ffa04 in ntdll!ZwWaitForWorkViaWorkerFactory () from /cygdrive/c/WINDOWS/SYSTEM32/ntdll.dll
+No symbol table info available.
+#1  0x00007ffd53993fe0 in ntdll!RtlInitializeResource () from /cygdrive/c/WINDOWS/SYSTEM32/ntdll.dll
+No symbol table info available.
+#2  0x00007ffd52d77bd4 in KERNEL32!BaseThreadInitThunk () from /cygdrive/c/WINDOWS/System32/KERNEL32.DLL
+No symbol table info available.
+#3  0x00007ffd539cce51 in ntdll!RtlUserThreadStart () from /cygdrive/c/WINDOWS/SYSTEM32/ntdll.dll
+No symbol table info available.
+#4  0x0000000000000000 in ?? ()
+No symbol table info available.
+Backtrace stopped: previous frame inner to this frame (corrupt stack?)
+
+Thread 2 (Thread 36500.0x92d0):
+#0  0x00007ffd539ffa04 in ntdll!ZwWaitForWorkViaWorkerFactory () from /cygdrive/c/WINDOWS/SYSTEM32/ntdll.dll
+No symbol table info available.
+#1  0x00007ffd53993fe0 in ntdll!RtlInitializeResource () from /cygdrive/c/WINDOWS/SYSTEM32/ntdll.dll
+No symbol table info available.
+#2  0x00007ffd52d77bd4 in KERNEL32!BaseThreadInitThunk () from /cygdrive/c/WINDOWS/System32/KERNEL32.DLL
+No symbol table info available.
+#3  0x00007ffd539cce51 in ntdll!RtlUserThreadStart () from /cygdrive/c/WINDOWS/SYSTEM32/ntdll.dll
+No symbol table info available.
+#4  0x0000000000000000 in ?? ()
+No symbol table info available.
+Backtrace stopped: previous frame inner to this frame (corrupt stack?)
+
+Thread 1 (Thread 36500.0x1d08):
+#0  0x00007ffd539fcbc4 in ntdll!ZwWaitForMultipleObjects () from /cygdrive/c/WINDOWS/SYSTEM32/ntdll.dll
+No symbol table info available.
+#1  0x00007ffd50948037 in WaitForMultipleObjectsEx () from /cygdrive/c/WINDOWS/System32/KERNELBASE.dll
+No symbol table info available.
+#2  0x00007ffd50947f1e in WaitForMultipleObjects () from /cygdrive/c/WINDOWS/System32/KERNELBASE.dll
+No symbol table info available.
+#3  0x00000001800485f5 in cygwait(void*, _LARGE_INTEGER*, unsigned int) () from /usr/bin/cygwin1.dll
+No symbol table info available.
+#4  0x0000000180173757 in wait4 () from /usr/bin/cygwin1.dll
+No symbol table info available.
+#5  0x00000001801439d1 in child_info_spawn::worker(char const*, char const* const*, char const* const*, int, int, int) () from /usr/bin/cygwin1.dll
+No symbol table info available.
+#6  0x0000000180144dcd in spawnve () from /usr/bin/cygwin1.dll
+No symbol table info available.
+#7  0x00000001801452e2 in spawnvp () from /usr/bin/cygwin1.dll
+No symbol table info available.
+#8  0x0000000180153a47 in system () from /usr/bin/cygwin1.dll
+No symbol table info available.
+#9  0x00000001801367ab in _sigfe () from /usr/bin/cygwin1.dll
+No symbol table info available.
+#10 0x000000010055e98b in AP_HAL::dump_stack_trace() ()
+No symbol table info available.
+#11 0x000000010055f8c7 in AP_HAL::panic(char const*, ...) ()
+No symbol table info available.
+#12 0x000000010044af3f in GCS_MAVLINK::next_deferred_bucket_message_to_send() ()
+No symbol table info available.
+#13 0x000000010043da90 in GCS_MAVLINK::update_send() ()
+No symbol table info available.
+#14 0x000000010053cdf8 in GCS::update_send() ()
+No symbol table info available.
+#15 0x000000010045e77a in AP_Scheduler::run(unsigned int) ()
+No symbol table info available.
+#16 0x000000010045ec80 in AP_Scheduler::loop() ()
+No symbol table info available.
+#17 0x0000000100424c41 in AP_Vehicle::loop() ()
+No symbol table info available.
+#18 0x00000001005de89d in HAL_SITL::run(int, char* const*, AP_HAL::HAL::Callbacks*) const ()
+No symbol table info available.
+#19 0x000000010061140b in main ()
+No symbol table info available.
+A debugging session is active.
+
+	Inferior 1 [process 36500] will be detached.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]
+[Inferior 1 (process 36500) detached]
