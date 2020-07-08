@@ -1060,11 +1060,11 @@ void AP_Logger::Write_OADijkstra(uint8_t state, uint8_t error_id, uint8_t curr_p
     WriteBlock(&pkt, sizeof(pkt));
 }
 
-void AP_Logger::Write_MAN(uint64_t time_us, uint8_t  queue)
+void AP_Logger::Write_MAN(uint8_t  queue)
 {
     const struct log_MAN pkt {
         LOG_PACKET_HEADER_INIT(LOG_MAN_MSG),
-        time_us     : time_us,
+        time_us     : AP_HAL::micros64(),
         queue       : queue
         };
     WriteBlock(&pkt, sizeof(pkt));

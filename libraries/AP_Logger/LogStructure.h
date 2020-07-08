@@ -1286,9 +1286,9 @@ struct PACKED log_MAN {
 #define ARSP_MULTS "F00B00----"
 
 #define MAN_LABELS "TimeUS,Airspeed,Temp,Health"
-#define MAN_FMT "QffcffBBfB"
-#define MAN_UNITS "snPOPP----"
-#define MAN_MULTS "F00B00----"
+#define MAN_FMT    "Qffc"
+#define MAN_UNITS  "snPO"
+#define MAN_MULTS  "F00B"
 
 // @LoggerMessage: ACC1,ACC2,ACC3
 // @Description: IMU accelerometer data
@@ -2290,7 +2290,7 @@ struct PACKED log_MAN {
 // @Field: V22: Variance for state 22
 // @Field: V23: Variance for state 23
 
-// @LoggerMessage: ILYA
+// @LoggerMessage: MAN
 // @Description: whatsapp buddy?
 // @Field: TimeUS: Time since system startup
 // @Field: queue: the Innovator №1
@@ -2324,7 +2324,7 @@ struct PACKED log_MAN {
     { LOG_MESSAGE_MSG, sizeof(log_Message), \
       "MSG",  "QZ",     "TimeUS,Message", "s-", "F-"}, \
     { LOG_MAN_MSG, sizeof(log_MAN), \
-      "ILYA",  MAN_FMT, MAN_LABELS, MAN_UNITS, MAN_MULTS }, \
+      "MAN",  MAN_FMT, MAN_LABELS, MAN_UNITS, MAN_MULTS }, \
     { LOG_RCIN_MSG, sizeof(log_RCIN), \
       "RCIN",  "QHHHHHHHHHHHHHH",     "TimeUS,C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C14", "sYYYYYYYYYYYYYY", "F--------------" }, \
     { LOG_RCOUT_MSG, sizeof(log_RCOUT), \

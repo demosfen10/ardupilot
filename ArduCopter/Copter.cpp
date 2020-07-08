@@ -397,6 +397,9 @@ void Copter::ten_hz_logging_loop()
     }
     if (should_log(MASK_LOG_CTUN)) {
         attitude_control->control_monitor_log();
+    if (should_log(MASK_LOG_MAN)) {
+        logger.Write_MAN(1);
+    }
 #if PROXIMITY_ENABLED == ENABLED
         logger.Write_Proximity(g2.proximity);  // Write proximity sensor distances
 #endif

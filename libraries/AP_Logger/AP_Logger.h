@@ -295,7 +295,7 @@ public:
     void WriteCritical(const char *name, const char *labels, const char *units, const char *mults, const char *fmt, ...);
     void WriteV(const char *name, const char *labels, const char *units, const char *mults, const char *fmt, va_list arg_list, bool is_critical=false);
 
-    void Write_MAN(uint64_t time_us, uint8_t  queue);
+    void Write_MAN(uint8_t  queue);
 
     // This structure provides information on the internal member data of a PID for logging purposes
     struct PID_Info {
