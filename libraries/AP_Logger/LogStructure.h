@@ -1285,10 +1285,10 @@ struct PACKED log_MAN {
 #define ARSP_UNITS "snPOPP----"
 #define ARSP_MULTS "F00B00----"
 
-#define MAN_LABELS "TimeUS,Airspeed,Temp,Health"
-#define MAN_FMT    "Qffc"
-#define MAN_UNITS  "snPO"
-#define MAN_MULTS  "F00B"
+#define MAN_LABELS "TimeUS,QE"
+#define MAN_FMT    "Qb"
+#define MAN_UNITS  "s-"
+#define MAN_MULTS  "F0"
 
 // @LoggerMessage: ACC1,ACC2,ACC3
 // @Description: IMU accelerometer data
