@@ -2311,6 +2311,18 @@ MAV_STATE GCS_MAVLINK::system_status() const
     return _system_status;
 }
 
+void GCS_MAVLINK::send_sensors_r()
+{
+    mavlink_msg_sensors_r_send(
+        chan,
+        1,
+        1,
+        1,
+        1,
+        1
+    );
+}
+
 /*
   Send MAVLink heartbeat
  */
@@ -4574,6 +4586,12 @@ bool GCS_MAVLINK::try_send_message(const enum ap_message id)
         CHECK_PAYLOAD_SIZE(AUTOPILOT_VERSION);
         send_autopilot_version();
         break;
+
+    case MSG_SENSORS_R: {
+        CHECK_PAYLOAD_SIZE(SENSORS_R);
+        send_sensors_r();
+        break;
+    }    
 
     case MSG_ESC_TELEMETRY: {
 #ifdef HAVE_AP_BLHELI_SUPPORT
