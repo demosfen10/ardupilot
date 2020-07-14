@@ -24,6 +24,7 @@
 #include <cmath>
 #include <stdio.h>
 #include <stdarg.h>
+#include <time.h>
 
 #include <AP_HAL/AP_HAL.h>
 
@@ -412,6 +413,14 @@ private:
         uint8_t compass     : 1;    // true if compass is healthy
         uint8_t primary_gps : 2;    // primary gps index
     } sensor_health;
+
+    struct {
+        float r1;
+        float r2;
+        float r3;
+        float r4;
+        float r5;
+    } sensors_r;
 
     // Motor Output
     MOTOR_CLASS *motors;

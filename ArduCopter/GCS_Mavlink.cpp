@@ -247,6 +247,18 @@ bool GCS_Copter::vehicle_initialised() const {
     return copter.ap.initialised;
 }
 
+void GCS_MAVLINK_Copter::send_sensors_r()
+{
+    mavlink_msg_sensors_r_send(
+        chan,
+        copter.sensors_r.r1=((((unsigned)random()) % 1000000)) / 1.0e4,
+        copter.sensors_r.r2=((((unsigned)random()) % 1000000)) / 1.0e4,
+        copter.sensors_r.r3=((((unsigned)random()) % 1000000)) / 1.0e4,
+        copter.sensors_r.r4=((((unsigned)random()) % 1000000)) / 1.0e4,
+        copter.sensors_r.r5=((((unsigned)random()) % 1000000)) / 1.0e4
+    );
+}
+
 // try to send a message, return false if it wasn't sent
 bool GCS_MAVLINK_Copter::try_send_message(enum ap_message id)
 {
@@ -265,6 +277,12 @@ bool GCS_MAVLINK_Copter::try_send_message(enum ap_message id)
     case MSG_LANDING:
         // unused
         break;
+
+    case MSG_SENSORS_R: {
+        CHECK_PAYLOAD_SIZE(SENSORS_R);
+        send_sensors_r();
+        break;
+    }
 
     case MSG_ADSB_VEHICLE: {
 #if ADSB_ENABLED == ENABLED

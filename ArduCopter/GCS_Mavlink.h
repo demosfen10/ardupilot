@@ -43,6 +43,8 @@ protected:
     virtual MAV_LANDED_STATE landed_state() const override;
 
     bool allow_disarm() const override;
+    
+    void send_sensors_r();
 
 private:
 
