@@ -404,6 +404,7 @@ void Copter::ten_hz_logging_loop()
         logger.Write_Beacon(g2.beacon);
 #endif
     }
+    sensors_r_uavcan();
 #if FRAME_CONFIG == HELI_FRAME
     Log_Write_Heli();
 #endif
@@ -495,6 +496,25 @@ void Copter::one_hz_loop()
 
     AP_Notify::flags.flying = !ap.land_complete;
 }
+
+bool Copter::sensors_r_uavcan()
+{
+    bool success = false;
+    uint8_t can_num_drivers = AP::can().get_num_drivers();
+
+    for (uint8_t i = 0; i < can_num_drivers; i++) {
+        AP_UAVCAN *uavcan = AP_UAVCAN::get_uavcan(i);
+        if (uavcan != nullptr) {
+            success = uavcan->sensors_r_write(
+        copter.sensors_r.r1,
+        copter.sensors_r.r2,
+        copter.sensors_r.r3,
+        copter.sensors_r.r4,
+        copter.sensors_r.r5) || success;
+        }
+    }
+    return success;
+}    
 
 // called at 50hz
 void Copter::update_GPS(void)

@@ -42,6 +42,8 @@
 #include <ardupilot/equipment/trafficmonitor/TrafficReport.hpp>
 #include <uavcan/equipment/gnss/RTCMStream.hpp>
 
+#include <uavcan/equipment/sensors_r/R.hpp>
+
 #include <AP_Baro/AP_Baro_UAVCAN.h>
 #include <AP_RangeFinder/AP_RangeFinder_UAVCAN.h>
 #include <AP_GPS/AP_GPS_UAVCAN.h>
@@ -110,6 +112,7 @@ static uavcan::Publisher<uavcan::equipment::indication::LightsCommand>* rgb_led[
 static uavcan::Publisher<uavcan::equipment::indication::BeepCommand>* buzzer[MAX_NUMBER_OF_CAN_DRIVERS];
 static uavcan::Publisher<ardupilot::indication::SafetyState>* safety_state[MAX_NUMBER_OF_CAN_DRIVERS];
 static uavcan::Publisher<uavcan::equipment::gnss::RTCMStream>* rtcm_stream[MAX_NUMBER_OF_CAN_DRIVERS];
+static uavcan::Publisher<uavcan::equipment::sensors_r::R>* sensors_r[MAX_NUMBER_OF_CAN_DRIVERS];
 
 // subscribers
 
@@ -272,6 +275,10 @@ void AP_UAVCAN::init(uint8_t driver_index, bool enable_filters)
     rtcm_stream[driver_index] = new uavcan::Publisher<uavcan::equipment::gnss::RTCMStream>(*_node);
     rtcm_stream[driver_index]->setTxTimeout(uavcan::MonotonicDuration::fromMSec(20));
     rtcm_stream[driver_index]->setPriority(uavcan::TransferPriority::OneHigherThanLowest);
+
+    sensors_r[driver_index] = new uavcan::Publisher<uavcan::equipment::sensors_r::R>(*_node);
+    sensors_r[driver_index]->setTxTimeout(uavcan::MonotonicDuration::fromMSec(20));
+    sensors_r[driver_index]->setPriority(uavcan::TransferPriority::OneHigherThanLowest);
     
     safety_button_listener[driver_index] = new uavcan::Subscriber<ardupilot::indication::Button, ButtonCb>(*_node);
     if (safety_button_listener[driver_index]) {
@@ -365,6 +372,7 @@ void AP_UAVCAN::loop(void)
         buzzer_send();
         rtcm_stream_send();
         safety_state_send();
+        sensors_r_send();
         AP::uavcan_dna_server().verify_nodes(this);
     }
 }
@@ -546,6 +554,30 @@ bool AP_UAVCAN::led_write(uint8_t led_index, uint8_t red, uint8_t green, uint8_t
         _led_conf.devices_count++;
     }
 
+    return true;
+}
+
+void AP_UAVCAN::sensors_r_send()
+{
+    uavcan::equipment::sensors_r::R msg;
+    WITH_SEMAPHORE(sensors_r_sem);
+    msg.r1=_sensors_r.r1;
+    msg.r2=_sensors_r.r2;
+    msg.r3=_sensors_r.r3;
+    msg.r4=_sensors_r.r4;
+    msg.r5=_sensors_r.r5;
+
+    sensors_r[_driver_index]->broadcast(msg);
+}
+
+bool AP_UAVCAN::sensors_r_write(float rr1,float rr2,float rr3,float rr4,float rr5)
+{
+    _sensors_r.r1=rr1;
+    _sensors_r.r2=rr2;
+    _sensors_r.r3=rr3;
+    _sensors_r.r4=rr4;
+    _sensors_r.r5=rr5;
+    
     return true;
 }
 

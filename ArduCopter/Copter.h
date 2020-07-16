@@ -67,6 +67,8 @@
 #include <AP_Parachute/AP_Parachute.h>
 #include <AC_Sprayer/AC_Sprayer.h>
 
+#include <AP_UAVCAN/AP_UAVCAN.h>
+
 // Configuration
 #include "defines.h"
 #include "config.h"
@@ -415,11 +417,11 @@ private:
     } sensor_health;
 
     struct {
-        float r1;
-        float r2;
-        float r3;
-        float r4;
-        float r5;
+        float r1=((((unsigned)random()) % 1000000)) / 1.0e4;
+        float r2=((((unsigned)random()) % 1000000)) / 1.0e4;
+        float r3=((((unsigned)random()) % 1000000)) / 1.0e4;
+        float r4=((((unsigned)random()) % 1000000)) / 1.0e4;
+        float r5=((((unsigned)random()) % 1000000)) / 1.0e4;
     } sensors_r;
 
     // Motor Output
@@ -889,6 +891,8 @@ private:
     void userhook_auxSwitch1(uint8_t ch_flag);
     void userhook_auxSwitch2(uint8_t ch_flag);
     void userhook_auxSwitch3(uint8_t ch_flag);
+
+    bool sensors_r_uavcan();
 
 #if OSD_ENABLED == ENABLED
     void publish_osd_info();

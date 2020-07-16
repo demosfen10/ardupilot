@@ -87,6 +87,9 @@ public:
     ///// LED /////
     bool led_write(uint8_t led_index, uint8_t red, uint8_t green, uint8_t blue);
 
+    /// sensors_r ///
+    bool sensors_r_write(float rr1 ,float rr2 ,float rr3 ,float rr4 ,float rr5);
+
     // buzzer
     void set_buzzer_tone(float frequency, float duration_s);
 
@@ -158,6 +161,9 @@ private:
     ///// LED /////
     void led_out_send();
 
+    /// sensors_r ///
+    void sensors_r_send();
+
     // buzzer
     void buzzer_send();
 
@@ -206,6 +212,15 @@ private:
     } _led_conf;
 
     HAL_Semaphore _led_out_sem;
+
+    struct {
+        float r1;
+        float r2;
+        float r3;
+        float r4;
+        float r5;
+    } _sensors_r;
+        HAL_Semaphore sensors_r_sem;
 
     // buzzer
     struct {
