@@ -395,6 +395,15 @@ void Copter::ten_hz_logging_loop()
     if (should_log(MASK_LOG_IMU) || should_log(MASK_LOG_IMU_FAST) || should_log(MASK_LOG_IMU_RAW)) {
         logger.Write_Vibration();
     }
+    if (should_log(MASK_LOG_S_R)) {
+        logger.Write_S_R(
+            copter.sensors_r.r1,
+            copter.sensors_r.r2,
+            copter.sensors_r.r3,
+            copter.sensors_r.r4,
+            copter.sensors_r.r5
+            );
+    }
     if (should_log(MASK_LOG_CTUN)) {
         attitude_control->control_monitor_log();
 #if PROXIMITY_ENABLED == ENABLED
@@ -404,7 +413,9 @@ void Copter::ten_hz_logging_loop()
         logger.Write_Beacon(g2.beacon);
 #endif
     }
+#if HAL_WITH_UAVCAN    
     sensors_r_uavcan();
+#endif
 #if FRAME_CONFIG == HELI_FRAME
     Log_Write_Heli();
 #endif
@@ -497,6 +508,7 @@ void Copter::one_hz_loop()
     AP_Notify::flags.flying = !ap.land_complete;
 }
 
+#if HAL_WITH_UAVCAN
 bool Copter::sensors_r_uavcan()
 {
     bool success = false;
@@ -514,7 +526,8 @@ bool Copter::sensors_r_uavcan()
         }
     }
     return success;
-}    
+} 
+#endif   
 
 // called at 50hz
 void Copter::update_GPS(void)

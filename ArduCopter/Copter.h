@@ -67,7 +67,9 @@
 #include <AP_Parachute/AP_Parachute.h>
 #include <AC_Sprayer/AC_Sprayer.h>
 
+#if HAL_WITH_UAVCAN
 #include <AP_UAVCAN/AP_UAVCAN.h>
+#endif
 
 // Configuration
 #include "defines.h"

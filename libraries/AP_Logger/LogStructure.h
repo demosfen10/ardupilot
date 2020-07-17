@@ -1203,6 +1203,16 @@ struct PACKED log_Arm_Disarm {
     uint8_t method;
 };
 
+struct PACKED log_S_R{
+    LOG_PACKET_HEADER;
+    uint64_t time_us;
+    float r1;
+    float r2;
+    float r3;
+    float r4;
+    float r5;
+};
+
 // FMT messages define all message formats other than FMT
 // UNIT messages define units which can be referenced by FMTU messages
 // FMTU messages associate types (e.g. centimeters/second/second) to FMT message fields
@@ -1278,6 +1288,11 @@ struct PACKED log_Arm_Disarm {
 #define ARSP_FMT "QffcffBBfB"
 #define ARSP_UNITS "snPOPP----"
 #define ARSP_MULTS "F00B00----"
+
+#define S_R_LABELS "TimeUS,R1,R2,R3,R4,R5"
+#define S_R_FMT "Qfffff"
+#define S_R_UNITS "s-----"
+#define S_R_MULTS "F-----"
 
 // @LoggerMessage: ACC1,ACC2,ACC3
 // @Description: IMU accelerometer data
@@ -2279,6 +2294,15 @@ struct PACKED log_Arm_Disarm {
 // @Field: V22: Variance for state 22
 // @Field: V23: Variance for state 23
 
+// @LoggerMessage: S_R
+// @Description: sensor_r
+// @Field: TimeUS: Time since system startup
+// @Field: R1: sensor_r № 1
+// @Field: R2: sensor_r № 2
+// @Field: R3: sensor_r № 3
+// @Field: R4: sensor_r № 4
+// @Field: R5: sensor_r № 5
+
 // messages for all boards
 #define LOG_BASE_STRUCTURES \
     { LOG_FORMAT_MSG, sizeof(log_Format), \
@@ -2499,8 +2523,10 @@ struct PACKED log_Arm_Disarm {
       "EV",   "QB",           "TimeUS,Id", "s-", "F-" }, \
     { LOG_ARM_DISARM_MSG, sizeof(log_Arm_Disarm), \
       "ARM", "QBIBB", "TimeUS,ArmState,ArmChecks,Forced,Method", "s----", "F----" }, \
+    { LOG_S_R_MSG, sizeof(log_S_R), \
+      "S_R",  S_R_FMT, S_R_LABELS, S_R_UNITS, S_R_MULTS }, \
     { LOG_ERROR_MSG, sizeof(log_Error), \
-      "ERR",   "QBB",         "TimeUS,Subsys,ECode", "s--", "F--" }
+      "ERR",   "QBB",         "TimeUS,Subsys,ECode", "s--", "F--" }  
 
 
 #define LOG_SBP_STRUCTURES \
@@ -2642,6 +2668,7 @@ enum LogMessages : uint8_t {
     LOG_EVENT_MSG,
     LOG_WHEELENCODER_MSG,
     LOG_MAV_MSG,
+    LOG_S_R_MSG,
     LOG_ERROR_MSG,
     LOG_ADSB_MSG,
     LOG_ARM_DISARM_MSG,

@@ -1059,3 +1059,17 @@ void AP_Logger::Write_OADijkstra(uint8_t state, uint8_t error_id, uint8_t curr_p
     };
     WriteBlock(&pkt, sizeof(pkt));
 }
+
+void AP_Logger::Write_S_R(float r1, float r2, float r3, float r4, float r5)
+{
+    struct log_S_R pkt {
+        LOG_PACKET_HEADER_INIT(LOG_S_R_MSG),
+        time_us     : AP_HAL::micros64(),
+        r1          : r1,
+        r2          : r2,
+        r3          : r3,
+        r4          : r4,
+        r5          : r5
+        };
+    WriteBlock(&pkt, sizeof(pkt));
+} 
