@@ -246,7 +246,23 @@ uint32_t GCS_MAVLINK_Copter::telem_delay() const
 bool GCS_Copter::vehicle_initialised() const {
     return copter.ap.initialised;
 }
-
+void GCS_MAVLINK_Copter::switch_s_r_OnOff()
+{
+    switch((Parameters::Mavlink_SwitchOnOff_S_R)copter.g2.sw_s_r.get())
+{
+    case Parameters::S_R_on:
+    {
+        return GCS_MAVLINK_Copter::send_sensors_r();
+        break;
+    }
+    case Parameters::S_R_off:
+    {
+        break;
+        //return;
+    }
+    default:break;
+}
+}
 void GCS_MAVLINK_Copter::send_sensors_r()
 {
     mavlink_msg_sensors_r_send(
@@ -257,6 +273,7 @@ void GCS_MAVLINK_Copter::send_sensors_r()
         copter.sensors_r.r4=((((unsigned)random()) % 1000000)) / 1.0e4,
         copter.sensors_r.r5=((((unsigned)random()) % 1000000)) / 1.0e4
     );
+    return;
 }
 
 // try to send a message, return false if it wasn't sent
@@ -399,6 +416,7 @@ const AP_Param::GroupInfo GCS_MAVLINK_Parameters::var_info[] = {
     // @Increment: 1
     // @User: Advanced
     AP_GROUPINFO("ADSB",   9, GCS_MAVLINK_Parameters, streamRates[9],  0),
+
 AP_GROUPEND
 };
 

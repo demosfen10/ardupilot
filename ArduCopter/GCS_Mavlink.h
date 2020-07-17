@@ -45,6 +45,7 @@ protected:
     bool allow_disarm() const override;
     
     void send_sensors_r();
+    void switch_s_r_OnOff();
 
 private:
 

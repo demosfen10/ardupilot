@@ -372,8 +372,15 @@ public:
 
         k_param_vehicle = 257, // vehicle common block of parameters
 
+        k_param_sw_sensor_r,
+
         // the k_param_* space is 9-bits in size
         // 511: reserved
+    };
+
+    enum Mavlink_SwitchOnOff_S_R{
+        S_R_on = 1,
+        S_R_off = 2
     };
 
     AP_Int16        format_version;
@@ -605,6 +612,8 @@ public:
 
     // Failsafe options bitmask #36
     AP_Int32 fs_options;
+
+    AP_Int8 sw_s_r;
 
 #if MODE_AUTOROTATE_ENABLED == ENABLED
     // Autonmous autorotation

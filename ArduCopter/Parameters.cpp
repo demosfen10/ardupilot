@@ -972,6 +972,12 @@ const AP_Param::GroupInfo ParametersG2::var_info[] = {
     AP_GROUPINFO("ZIGZAG_AUTO_PUMP", 38, ParametersG2, zigzag_auto_pump_enabled, ZIGZAG_AUTO_PUMP_ENABLED),
 #endif
 
+    // @Param: SW_S_R
+    // @DisplayName: Parameter S_R
+    // @Description: switch on/of S_R parameter
+    // @Range: 1 2
+    // @User: Standard
+    AP_GROUPINFO("SW_S_R",   39, ParametersG2, sw_s_r, 1),
 
     AP_GROUPEND
 };
