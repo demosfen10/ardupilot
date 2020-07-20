@@ -380,7 +380,6 @@ public:
 
     enum Mavlink_SwitchOnOff_S_R{
         S_R_on = 1,
-        S_R_off = 2
     };
 
     AP_Int16        format_version;
